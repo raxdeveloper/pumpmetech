@@ -14,7 +14,243 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      challenges: {
+        Row: {
+          ai_confidence: number | null
+          ai_reasoning: string | null
+          ai_recommendation: string | null
+          created_at: string
+          creator_id: string
+          deadline: string
+          description: string | null
+          id: string
+          on_chain_id: number | null
+          proof_url: string | null
+          resolved_at: string | null
+          reward_bps: number
+          stake_no_sol: number
+          stake_yes_sol: number
+          status: Database["public"]["Enums"]["challenge_status"]
+          title: string
+        }
+        Insert: {
+          ai_confidence?: number | null
+          ai_reasoning?: string | null
+          ai_recommendation?: string | null
+          created_at?: string
+          creator_id: string
+          deadline: string
+          description?: string | null
+          id?: string
+          on_chain_id?: number | null
+          proof_url?: string | null
+          resolved_at?: string | null
+          reward_bps: number
+          stake_no_sol?: number
+          stake_yes_sol?: number
+          status?: Database["public"]["Enums"]["challenge_status"]
+          title: string
+        }
+        Update: {
+          ai_confidence?: number | null
+          ai_reasoning?: string | null
+          ai_recommendation?: string | null
+          created_at?: string
+          creator_id?: string
+          deadline?: string
+          description?: string | null
+          id?: string
+          on_chain_id?: number | null
+          proof_url?: string | null
+          resolved_at?: string | null
+          reward_bps?: number
+          stake_no_sol?: number
+          stake_yes_sol?: number
+          status?: Database["public"]["Enums"]["challenge_status"]
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "challenges_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "creators"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      creators: {
+        Row: {
+          avatar_color: string
+          badge_metadata_uri: string | null
+          badge_tier: Database["public"]["Enums"]["badge_tier"]
+          bio: string | null
+          challenge_completions: number
+          created_at: string
+          display_name: string
+          handle: string
+          holder_count: number
+          id: string
+          initials: string
+          is_graduated: boolean
+          last_scored_at: string | null
+          market_cap_sol: number
+          momentum_reasoning: string | null
+          momentum_score: number
+          momentum_trend: Database["public"]["Enums"]["momentum_trend"]
+          price_change_24h: number
+          price_history: number[]
+          price_sol: number
+          sol_reserves: number
+          supply: number
+          token_symbol: string
+          updated_at: string
+          volume_sol: number
+          x_handle: string | null
+          x_verified: boolean
+        }
+        Insert: {
+          avatar_color?: string
+          badge_metadata_uri?: string | null
+          badge_tier?: Database["public"]["Enums"]["badge_tier"]
+          bio?: string | null
+          challenge_completions?: number
+          created_at?: string
+          display_name: string
+          handle: string
+          holder_count?: number
+          id?: string
+          initials: string
+          is_graduated?: boolean
+          last_scored_at?: string | null
+          market_cap_sol?: number
+          momentum_reasoning?: string | null
+          momentum_score?: number
+          momentum_trend?: Database["public"]["Enums"]["momentum_trend"]
+          price_change_24h?: number
+          price_history?: number[]
+          price_sol?: number
+          sol_reserves?: number
+          supply?: number
+          token_symbol: string
+          updated_at?: string
+          volume_sol?: number
+          x_handle?: string | null
+          x_verified?: boolean
+        }
+        Update: {
+          avatar_color?: string
+          badge_metadata_uri?: string | null
+          badge_tier?: Database["public"]["Enums"]["badge_tier"]
+          bio?: string | null
+          challenge_completions?: number
+          created_at?: string
+          display_name?: string
+          handle?: string
+          holder_count?: number
+          id?: string
+          initials?: string
+          is_graduated?: boolean
+          last_scored_at?: string | null
+          market_cap_sol?: number
+          momentum_reasoning?: string | null
+          momentum_score?: number
+          momentum_trend?: Database["public"]["Enums"]["momentum_trend"]
+          price_change_24h?: number
+          price_history?: number[]
+          price_sol?: number
+          sol_reserves?: number
+          supply?: number
+          token_symbol?: string
+          updated_at?: string
+          volume_sol?: number
+          x_handle?: string | null
+          x_verified?: boolean
+        }
+        Relationships: []
+      }
+      on_chain_events: {
+        Row: {
+          creator_id: string | null
+          event_type: string
+          id: string
+          metadata: Json | null
+          occurred_at: string
+          signature: string | null
+          sol_amount: number | null
+          token_amount: number | null
+          wallet: string | null
+        }
+        Insert: {
+          creator_id?: string | null
+          event_type: string
+          id?: string
+          metadata?: Json | null
+          occurred_at?: string
+          signature?: string | null
+          sol_amount?: number | null
+          token_amount?: number | null
+          wallet?: string | null
+        }
+        Update: {
+          creator_id?: string | null
+          event_type?: string
+          id?: string
+          metadata?: Json | null
+          occurred_at?: string
+          signature?: string | null
+          sol_amount?: number | null
+          token_amount?: number | null
+          wallet?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "on_chain_events_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "creators"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      price_history: {
+        Row: {
+          creator_id: string
+          id: string
+          market_cap_sol: number
+          price_sol: number
+          recorded_at: string
+          supply: number
+          volume_1h: number
+        }
+        Insert: {
+          creator_id: string
+          id?: string
+          market_cap_sol: number
+          price_sol: number
+          recorded_at?: string
+          supply: number
+          volume_1h?: number
+        }
+        Update: {
+          creator_id?: string
+          id?: string
+          market_cap_sol?: number
+          price_sol?: number
+          recorded_at?: string
+          supply?: number
+          volume_1h?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "price_history_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "creators"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +259,9 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      badge_tier: "Bronze" | "Silver" | "Gold" | "Platinum" | "Graduate"
+      challenge_status: "active" | "completed" | "failed" | "disputed"
+      momentum_trend: "rising" | "stable" | "falling" | "up" | "down"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +388,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      badge_tier: ["Bronze", "Silver", "Gold", "Platinum", "Graduate"],
+      challenge_status: ["active", "completed", "failed", "disputed"],
+      momentum_trend: ["rising", "stable", "falling", "up", "down"],
+    },
   },
 } as const

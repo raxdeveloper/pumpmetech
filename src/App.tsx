@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { WalletProvider } from "@/lib/wallet";
 import Landing from "./pages/Landing";
 import Leaderboard from "./pages/Leaderboard";
 import CreatorProfile from "./pages/CreatorProfile";
@@ -16,19 +17,21 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/c/:handle" element={<CreatorProfile />} />
-          <Route path="/challenges" element={<Challenges />} />
-          <Route path="/create" element={<CreateWizard />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <WalletProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/c/:handle" element={<CreatorProfile />} />
+            <Route path="/challenges" element={<Challenges />} />
+            <Route path="/create" element={<CreateWizard />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </WalletProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

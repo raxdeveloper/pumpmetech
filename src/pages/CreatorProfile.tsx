@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import confetti from "canvas-confetti";
 import { Navbar } from "@/components/layout/Navbar";
-import { getCreatorByHandle, MOCK_CHALLENGES, tierFor } from "@/lib/mock-data";
+import { MOCK_CHALLENGES, tierFor } from "@/lib/mock-data";
+import { useCreator } from "@/hooks/useCreators";
 import { MomentumBadge } from "@/components/creator/MomentumBadge";
 import { BadgeNFT } from "@/components/creator/BadgeNFT";
 import { BondingCurveChart } from "@/components/trading/BondingCurveChart";
@@ -14,7 +15,7 @@ import { ExternalLink, Users, Activity, Trophy, BadgeCheck } from "lucide-react"
 
 export default function CreatorProfile() {
   const { handle = "" } = useParams();
-  const c = getCreatorByHandle(handle);
+  const { creator: c } = useCreator(handle);
 
   useEffect(() => {
     if (c?.isGraduated) {

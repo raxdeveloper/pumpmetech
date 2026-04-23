@@ -79,23 +79,33 @@
   }
   html, body, #root {
     @apply bg-background text-foreground min-h-screen;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Space Mono', ui-monospace, monospace;
     -webkit-font-smoothing: antialiased;
-    font-feature-settings: 'cv11', 'ss01';
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
-    letter-spacing: -0.02em;
+    font-family: 'Rubik Mono One', Impact, system-ui, sans-serif;
+    letter-spacing: 0;
+    text-transform: uppercase;
   }
-  .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; letter-spacing: -0.02em; }
-  .font-mono-num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  .font-display { font-family: 'Rubik Mono One', Impact, sans-serif; letter-spacing: 0; text-transform: uppercase; }
+  .font-pixel { font-family: 'Press Start 2P', monospace; letter-spacing: 0; line-height: 1.6; }
+  .font-terminal { font-family: 'VT323', monospace; letter-spacing: 0.02em; }
+  .font-meme { font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; text-transform: uppercase; letter-spacing: 0.01em; }
+  .font-mono-num { font-family: 'Space Mono', 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; font-weight: 700; }
   .tabular { font-variant-numeric: tabular-nums; }
   .label-eyebrow {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 11px;
-    letter-spacing: 0.08em;
+    font-family: 'Press Start 2P', monospace;
+    font-weight: 400;
+    font-size: 9px;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
+  }
+  .text-glitch {
+    text-shadow: 2px 0 hsl(var(--brand-green) / 0.7), -2px 0 hsl(var(--primary) / 0.7);
+  }
+  .text-stroke-brand {
+    -webkit-text-stroke: 1.5px hsl(var(--primary));
+    color: transparent;
   }
 }
 

@@ -21,11 +21,31 @@ export default function CreatorProfile() {
   const { handle = "" } = useParams();
   const { creator: c } = useCreator(handle);
 
+  const [refreshing, setRefreshing] = useState(false);
+
   useEffect(() => {
     if (c?.isGraduated) {
       confetti({ particleCount: 80, spread: 80, origin: { y: 0.3 }, colors: ["#9945FF", "#14F195", "#FFB800", "#00C2FF"] });
     }
   }, [c?.isGraduated]);
+
+  async function refreshScore() {
+    if (!c) return;
+    setRefreshing(true);
+    const prev = c.momentumScore;
+    try {
+      const { data, error } = await supabase.functions.invoke("score-creator", {
+        body: { handle: c.handle },
+      });
+      if (error) throw error;
+      const next = data?.score ?? data?.momentum_score;
+      toast({ title: "Momentum rescored", description: `${prev} → ${next ?? "?"} · ${data?.trend ?? ""}` });
+    } catch (e: any) {
+      toast({ title: "Rescore failed", description: e.message ?? "Try again", variant: "destructive" });
+    } finally {
+      setRefreshing(false);
+    }
+  }
 
   if (!c) {
     return (

@@ -1,9 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import confetti from "canvas-confetti";
 import { Navbar } from "@/components/layout/Navbar";
 import { MOCK_CHALLENGES, tierFor } from "@/lib/mock-data";
 import { useCreator } from "@/hooks/useCreators";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
+import { RefreshCw } from "lucide-react";
 import { MomentumBadge } from "@/components/creator/MomentumBadge";
 import { BadgeNFT } from "@/components/creator/BadgeNFT";
 import { BondingCurveChart } from "@/components/trading/BondingCurveChart";

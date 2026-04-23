@@ -12,9 +12,12 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Space Grotesk", "system-ui", "sans-serif"],
-        sans: ["Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+        display: ["Rubik Mono One", "Impact", "system-ui", "sans-serif"],
+        pixel: ["'Press Start 2P'", "monospace"],
+        terminal: ["VT323", "monospace"],
+        sans: ["Space Mono", "ui-monospace", "monospace"],
+        mono: ["Space Mono", "JetBrains Mono", "ui-monospace", "monospace"],
+        meme: ["Impact", "Haettenschweiler", "Arial Narrow Bold", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

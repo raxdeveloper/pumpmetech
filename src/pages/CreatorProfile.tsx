@@ -90,6 +90,16 @@ export default function CreatorProfile() {
                 <div className="mt-4 flex flex-wrap items-center gap-2">
                   <MomentumBadge score={c.momentumScore} tier={tier} trend={c.momentumTrend} size="lg" />
                   <span className="rounded-md border border-white/[0.06] bg-elevated px-2.5 py-1 text-xs font-display font-semibold">${c.tokenSymbol}</span>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={refreshScore}
+                    disabled={refreshing}
+                    className="h-7 gap-1.5 border-brand-purple/40 text-xs hover:bg-brand-purple/10"
+                  >
+                    <RefreshCw className={`h-3 w-3 ${refreshing ? "animate-spin" : ""}`} />
+                    {refreshing ? "Scoring…" : "Refresh score"}
+                  </Button>
                   <span className="text-xs text-secondary-fg">· {c.momentumReasoning}</span>
                 </div>
               </div>

@@ -1,9 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import confetti from "canvas-confetti";
 import { Navbar } from "@/components/layout/Navbar";
 import { MOCK_CHALLENGES, tierFor } from "@/lib/mock-data";
 import { useCreator } from "@/hooks/useCreators";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
+import { RefreshCw } from "lucide-react";
 import { MomentumBadge } from "@/components/creator/MomentumBadge";
 import { BadgeNFT } from "@/components/creator/BadgeNFT";
 import { BondingCurveChart } from "@/components/trading/BondingCurveChart";
@@ -17,11 +21,31 @@ export default function CreatorProfile() {
   const { handle = "" } = useParams();
   const { creator: c } = useCreator(handle);
 
+  const [refreshing, setRefreshing] = useState(false);
+
   useEffect(() => {
     if (c?.isGraduated) {
       confetti({ particleCount: 80, spread: 80, origin: { y: 0.3 }, colors: ["#9945FF", "#14F195", "#FFB800", "#00C2FF"] });
     }
   }, [c?.isGraduated]);
+
+  async function refreshScore() {
+    if (!c) return;
+    setRefreshing(true);
+    const prev = c.momentumScore;
+    try {
+      const { data, error } = await supabase.functions.invoke("score-creator", {
+        body: { handle: c.handle },
+      });
+      if (error) throw error;
+      const next = data?.score ?? data?.momentum_score;
+      toast({ title: "Momentum rescored", description: `${prev} → ${next ?? "?"} · ${data?.trend ?? ""}` });
+    } catch (e: any) {
+      toast({ title: "Rescore failed", description: e.message ?? "Try again", variant: "destructive" });
+    } finally {
+      setRefreshing(false);
+    }
+  }
 
   if (!c) {
     return (
@@ -66,6 +90,16 @@ export default function CreatorProfile() {
                 <div className="mt-4 flex flex-wrap items-center gap-2">
                   <MomentumBadge score={c.momentumScore} tier={tier} trend={c.momentumTrend} size="lg" />
                   <span className="rounded-md border border-white/[0.06] bg-elevated px-2.5 py-1 text-xs font-display font-semibold">${c.tokenSymbol}</span>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={refreshScore}
+                    disabled={refreshing}
+                    className="h-7 gap-1.5 border-brand-purple/40 text-xs hover:bg-brand-purple/10"
+                  >
+                    <RefreshCw className={`h-3 w-3 ${refreshing ? "animate-spin" : ""}`} />
+                    {refreshing ? "Scoring…" : "Refresh score"}
+                  </Button>
                   <span className="text-xs text-secondary-fg">· {c.momentumReasoning}</span>
                 </div>
               </div>

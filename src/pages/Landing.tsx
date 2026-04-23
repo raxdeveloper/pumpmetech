@@ -2,13 +2,14 @@ import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
 import { CreatorCard } from "@/components/creator/CreatorCard";
-import { MOCK_CREATORS } from "@/lib/mock-data";
+import { useCreators } from "@/hooks/useCreators";
 import { ArrowRight, Activity, Brain, ShieldCheck, Sparkles, Trophy } from "lucide-react";
 import { formatSOL } from "@/lib/bonding-curve";
 
 export default function Landing() {
-  const top = [...MOCK_CREATORS].sort((a, b) => b.momentumScore - a.momentumScore).slice(0, 6);
-  const ticker = [...MOCK_CREATORS, ...MOCK_CREATORS];
+  const { creators } = useCreators();
+  const top = [...creators].sort((a, b) => b.momentumScore - a.momentumScore).slice(0, 6);
+  const ticker = [...creators, ...creators];
 
   return (
     <div className="min-h-screen bg-background">
@@ -40,9 +41,9 @@ export default function Landing() {
             </div>
 
             <div className="mt-10 grid grid-cols-3 gap-4 text-center">
-              <Stat label="Creators" value={MOCK_CREATORS.length.toString()} />
-              <Stat label="Total volume" value={`${formatSOL(MOCK_CREATORS.reduce((s, c) => s + c.volumeSOL, 0))} SOL`} />
-              <Stat label="Holders" value={MOCK_CREATORS.reduce((s, c) => s + c.holderCount, 0).toLocaleString()} />
+              <Stat label="Creators" value={creators.length.toString()} />
+              <Stat label="Total volume" value={`${formatSOL(creators.reduce((s, c) => s + c.volumeSOL, 0))} SOL`} />
+              <Stat label="Holders" value={creators.reduce((s, c) => s + c.holderCount, 0).toLocaleString()} />
             </div>
           </div>
         </div>

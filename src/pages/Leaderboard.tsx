@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
-import { MOCK_CREATORS, tierFor } from "@/lib/mock-data";
+import { useCreators } from "@/hooks/useCreators";
 import { MomentumBadge } from "@/components/creator/MomentumBadge";
 import { formatSOL } from "@/lib/bonding-curve";
 import { Input } from "@/components/ui/input";
@@ -13,12 +13,13 @@ export default function Leaderboard() {
   const [q, setQ] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("momentum");
   const [desc, setDesc] = useState(true);
+  const { creators, tierFor } = useCreators();
 
   const rows = useMemo(() => {
-    const filtered = MOCK_CREATORS.filter(
+    const filtered = creators.filter(
       (c) => !q || c.handle.toLowerCase().includes(q.toLowerCase()) || c.tokenSymbol.toLowerCase().includes(q.toLowerCase())
     );
-    const m: Record<SortKey, (a: typeof MOCK_CREATORS[number]) => number> = {
+    const m: Record<SortKey, (a: typeof creators[number]) => number> = {
       momentum: (a) => a.momentumScore,
       price: (a) => a.priceSOL,
       change: (a) => a.priceChange24h,
@@ -26,7 +27,7 @@ export default function Leaderboard() {
       volume: (a) => a.volumeSOL,
     };
     return [...filtered].sort((a, b) => (desc ? m[sortKey](b) - m[sortKey](a) : m[sortKey](a) - m[sortKey](b)));
-  }, [q, sortKey, desc]);
+  }, [q, sortKey, desc, creators]);
 
   const toggle = (k: SortKey) => {
     if (sortKey === k) setDesc(!desc);
@@ -41,7 +42,7 @@ export default function Leaderboard() {
           <div>
             <span className="label-eyebrow text-brand-purple">Leaderboard</span>
             <h1 className="mt-2 font-display text-4xl font-semibold tracking-tight">All creators, ranked by signal.</h1>
-            <p className="mt-2 text-secondary-fg">Live AI-scored momentum across {MOCK_CREATORS.length} active tokens.</p>
+            <p className="mt-2 text-secondary-fg">Live AI-scored momentum across {creators.length} active tokens.</p>
           </div>
           <div className="relative w-full max-w-xs">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-tertiary-fg" />

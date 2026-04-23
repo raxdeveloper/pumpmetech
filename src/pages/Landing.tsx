@@ -24,12 +24,12 @@ export default function Landing() {
               <span className="h-1.5 w-1.5 rounded-full bg-brand-green animate-pulse-glow" />
               Live on Solana · scored by AI
             </span>
-            <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
+            <h1 className="mt-6 font-display text-4xl leading-[1.1] md:text-6xl">
               The only social token platform <br />
               <span className="text-gradient-brand">where price means something.</span>
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-secondary-fg">
-              Creators mint personal tokens. AI scores their social momentum every 6 hours and adjusts the bonding curve in real-time. Holders bet on creator challenges via on-chain prediction markets.
+            <p className="mx-auto mt-6 max-w-2xl font-terminal text-2xl text-secondary-fg">
+              &gt; Creators mint personal tokens. AI scores their social momentum every 6 hours and adjusts the bonding curve in real-time. Holders bet on creator challenges via on-chain prediction markets._
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button asChild size="lg" className="bg-gradient-brand text-white hover:opacity-90 shadow-glow">

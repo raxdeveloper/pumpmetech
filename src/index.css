@@ -94,6 +94,7 @@
   .font-serif-it { font-family: 'Instrument Serif', serif; font-style: italic; }
   .font-sans { font-family: 'Inter', sans-serif; }
   .font-mono-num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; font-weight: 500; }
+  .font-bitcount { font-family: 'Bitcount Prop Single', 'JetBrains Mono', monospace; letter-spacing: 0.02em; }
   .tabular { font-variant-numeric: tabular-nums; }
   .label-eyebrow {
     font-family: 'Inter', sans-serif;

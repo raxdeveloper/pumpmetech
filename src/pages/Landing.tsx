@@ -44,18 +44,18 @@ export default function Landing() {
           {/* Headline */}
           <div className="mx-auto mt-8 max-w-4xl text-center">
             <h1 className="font-display text-5xl leading-[1.05] md:text-7xl lg:text-[88px] animate-hero-rise delay-100">
-              Create, Trade & Earn
+              The only social token platform
               <br />
               <span className="relative inline-block">
-                <span className="relative z-10">in 30 Seconds</span>
+                <span className="relative z-10 text-primary">where price means something.</span>
                 <span className="absolute inset-x-0 bottom-2 -z-0 h-[0.55em] bg-white/5 backdrop-blur-sm rounded-sm" />
               </span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-xl font-sans text-base text-secondary-fg md:text-lg animate-hero-rise delay-200">
-              An AI-scored reputation economy where every creator token, trade
-              and prediction fuels one Solana-native network powered by{" "}
-              <span className="font-semibold text-foreground">($PUMP)</span>.
+              Creators mint personal tokens. AI scores their social momentum every 6 hours
+              and adjusts the bonding curve in real-time. Holders bet on creator
+              challenges via on-chain prediction markets.
             </p>
 
             {/* CTA */}

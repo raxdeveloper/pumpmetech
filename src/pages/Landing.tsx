@@ -3,7 +3,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
 import { CreatorCard } from "@/components/creator/CreatorCard";
 import { useCreators } from "@/hooks/useCreators";
-import { ArrowRight, Activity, Brain, ShieldCheck, Sparkles, Trophy } from "lucide-react";
+import { ArrowUpRight, Compass, TrendingUp, Rocket, MessageCircle, Coins } from "lucide-react";
 import { formatSOL } from "@/lib/bonding-curve";
 
 export default function Landing() {
@@ -11,52 +11,130 @@ export default function Landing() {
   const top = [...creators].sort((a, b) => b.momentumScore - a.momentumScore).slice(0, 6);
   const ticker = [...creators, ...creators];
 
+  const totalVolume = creators.reduce((s, c) => s + c.volumeSOL, 0);
+  const totalHolders = creators.reduce((s, c) => s + c.holderCount, 0);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      {/* Hero */}
+      {/* Hero — cinematic sky */}
       <section className="relative overflow-hidden">
-        <div className="grid-bg absolute inset-0 -z-10 opacity-80" />
-        <div className="container relative pb-24 pt-20 md:pt-28">
-          <div className="mx-auto max-w-3xl text-center animate-fade-in">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-purple/40 bg-brand-purple/10 px-3 py-1 text-xs font-medium text-brand-purple">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-green animate-pulse-glow" />
-              Live on Solana · scored by AI
-            </span>
-            <h1 className="mt-6 font-display text-4xl leading-[1.1] md:text-6xl">
-              The only social token platform <br />
-              <span className="text-gradient-brand">where price means something.</span>
+        <div className="absolute inset-0 -z-10 clouds-bg" />
+        <div className="absolute inset-0 -z-10 opacity-40 animate-cloud"
+             style={{ background: "radial-gradient(ellipse 60% 40% at 30% 70%, hsl(28 50% 40% / 0.35), transparent 70%)" }} />
+
+        <div className="container relative pt-16 pb-10 md:pt-24">
+          {/* Powered by Solana pill */}
+          <div className="flex justify-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-background/40 px-4 py-1.5 text-xs backdrop-blur">
+              <span className="h-2 w-2 rounded-full bg-primary animate-pulse-dot" />
+              <span className="text-secondary-fg">Powered by</span>
+              <span className="font-semibold text-gradient-brand">Solana</span>
+            </div>
+          </div>
+
+          {/* Headline */}
+          <div className="mx-auto mt-8 max-w-4xl text-center">
+            <h1 className="font-display text-5xl leading-[1.05] md:text-7xl lg:text-[88px]">
+              Create, Trade & Earn
+              <br />
+              <span className="relative inline-block">
+                <span className="relative z-10">in 30 Seconds</span>
+                <span className="absolute inset-x-0 bottom-2 -z-0 h-[0.55em] bg-white/5 backdrop-blur-sm rounded-sm" />
+              </span>
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl font-terminal text-2xl text-secondary-fg">
-              &gt; Creators mint personal tokens. AI scores their social momentum every 6 hours and adjusts the bonding curve in real-time. Holders bet on creator challenges via on-chain prediction markets._
+
+            <p className="mx-auto mt-6 max-w-xl font-sans text-base text-secondary-fg md:text-lg">
+              An AI-scored reputation economy where every creator token, trade
+              and prediction fuels one Solana-native network powered by{" "}
+              <span className="font-semibold text-foreground">($PUMP)</span>.
             </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button asChild size="lg" className="bg-gradient-brand text-white hover:opacity-90 shadow-glow">
-                <Link to="/create">Launch your token <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-white/10 bg-elevated hover:bg-hover">
-                <Link to="/leaderboard">View leaderboard</Link>
-              </Button>
+
+            {/* CTA */}
+            <div className="mt-10 flex flex-col items-center gap-3">
+              <div className="ring-cta">
+                <Button asChild size="lg" className="btn-cta-green rounded-full px-8 py-6 text-base font-semibold">
+                  <Link to="/create">
+                    Start Trading <ArrowUpRight className="ml-1 h-5 w-5" />
+                  </Link>
+                </Button>
+              </div>
+              <p className="text-xs text-secondary-fg">
+                Secure Non-Custodial Wallet
+                <br />
+                Instant sign-up, instant Rewards.
+              </p>
             </div>
 
-            <div className="mt-10 grid grid-cols-3 gap-4 text-center">
-              <Stat label="Creators" value={creators.length.toString()} />
-              <Stat label="Total volume" value={`${formatSOL(creators.reduce((s, c) => s + c.volumeSOL, 0))} SOL`} />
-              <Stat label="Holders" value={creators.reduce((s, c) => s + c.holderCount, 0).toLocaleString()} />
+            {/* Quick nav chips */}
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
+              <ChipLink to="/leaderboard" Icon={Compass} label="Discover" active />
+              <ChipLink to="/leaderboard" Icon={TrendingUp} label="Trade" />
+              <ChipLink to="/create" Icon={Rocket} label="Create" />
+              <ChipLink to="/challenges" Icon={MessageCircle} label="Chat" />
+              <ChipLink to="/portfolio" Icon={Coins} label="Earn" />
             </div>
+          </div>
+
+          {/* Floating dashboard preview */}
+          <div className="relative mx-auto mt-16 max-w-6xl">
+            <div className="rounded-3xl border border-white/10 bg-elevated/80 p-3 shadow-card backdrop-blur-xl animate-float">
+              <div className="rounded-2xl bg-background/80 p-4">
+                <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-6 w-6 rounded-md bg-primary/90" />
+                    <span className="font-sans text-sm font-medium">pumpme<span className="text-primary">.</span>tech</span>
+                  </div>
+                  <div className="hidden sm:flex items-center gap-2">
+                    <div className="rounded-full bg-elevated px-3 py-1 text-xs text-secondary-fg">$ {formatSOL(totalVolume, 0)} SOL</div>
+                    <div className="rounded-full btn-cta-green px-3 py-1 text-xs">+ Create</div>
+                  </div>
+                </div>
+
+                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  {top.slice(0, 4).map((c) => {
+                    const up = c.priceChange24h >= 0;
+                    return (
+                      <div key={c.handle} className="rounded-xl border border-white/[0.06] bg-surface/80 p-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="h-6 w-6 rounded-full" style={{ background: c.avatarColor }} />
+                            <span className="text-sm font-medium">{c.displayName.split(" ")[0]}</span>
+                            <span className="text-xs text-secondary-fg">{`{${c.tokenSymbol}}`}</span>
+                          </div>
+                          <span className="text-[10px] text-secondary-fg">{c.holderCount.toLocaleString()} holders</span>
+                        </div>
+                        <div className="mt-3 flex items-end justify-between">
+                          <div>
+                            <div className="label-eyebrow text-[9px]">Market cap</div>
+                            <div className="font-mono-num text-sm">{formatSOL(c.marketCapSOL, 1)} SOL</div>
+                            <div className={`font-mono-num text-xs ${up ? "text-up" : "text-down"}`}>
+                              {up ? "↗ +" : "↘ "}{c.priceChange24h.toFixed(2)}%
+                            </div>
+                          </div>
+                          <Sparkline up={up} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            {/* glow */}
+            <div className="pointer-events-none absolute -inset-x-12 -bottom-12 -z-10 h-40 rounded-full bg-primary/20 blur-3xl" />
           </div>
         </div>
 
-        {/* Ticker */}
-        <div className="border-y border-white/[0.06] bg-surface/60 backdrop-blur">
+        {/* Live ticker */}
+        <div className="border-y border-white/[0.06] bg-background/60 backdrop-blur">
           <div className="overflow-hidden py-3">
             <div className="flex gap-8 animate-ticker whitespace-nowrap">
               {ticker.map((c, i) => {
                 const up = c.priceChange24h >= 0;
                 return (
                   <span key={i} className="inline-flex items-center gap-2 text-sm">
-                    <span className="font-display font-semibold">${c.tokenSymbol}</span>
+                    <span className="font-sans font-semibold">${c.tokenSymbol}</span>
                     <span className="font-mono-num text-secondary-fg">{formatSOL(c.priceSOL, 4)}</span>
                     <span className={`font-mono-num text-xs ${up ? "text-up" : "text-down"}`}>
                       {up ? "+" : ""}{c.priceChange24h.toFixed(2)}%
@@ -69,43 +147,55 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Stats strip */}
+      <section className="container py-16">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          <Stat label="Total Volume" value={`${formatSOL(totalVolume, 0)} SOL`} />
+          <Stat label="Creators" value={creators.length.toString()} />
+          <Stat label="Holders" value={totalHolders.toLocaleString()} />
+          <Stat label="Graduated" value={creators.filter((c) => c.isGraduated).length.toString()} />
+        </div>
+      </section>
+
       {/* How it works */}
-      <section className="container py-20">
+      <section className="container pb-20">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="label-eyebrow text-brand-purple">How it works</span>
-          <h2 className="mt-3 font-display text-4xl font-semibold tracking-tight">Real signal, on-chain.</h2>
-          <p className="mt-3 text-secondary-fg">
+          <span className="label-eyebrow">How it works</span>
+          <h2 className="mt-3 font-display text-4xl md:text-5xl">
+            Real signal, <span className="font-serif-it text-primary">on-chain.</span>
+          </h2>
+          <p className="mt-4 font-sans text-secondary-fg">
             Four primitives that make creator tokens trade on substance, not vibes.
           </p>
         </div>
 
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {[
-            { Icon: Brain, t: "AI Momentum Oracle", d: "Claude scores each creator 0–100 every 6h based on real social signals." },
-            { Icon: Activity, t: "Quadratic bonding curve", d: "Price = K × supply. Fair, predictable, no rug surprises." },
-            { Icon: Trophy, t: "Prediction markets", d: "Stake YES/NO on creator challenges. Winners split the pot." },
-            { Icon: ShieldCheck, t: "Live badge NFTs", d: "Bronze → Graduate. Auto-mints, auto-updates as score moves." },
-          ].map(({ Icon, t, d }) => (
-            <div key={t} className="rounded-xl border border-white/[0.06] bg-surface p-5 shadow-card">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-brand-soft">
-                <Icon className="h-5 w-5 text-brand-purple" />
-              </div>
-              <h3 className="mt-4 font-display text-lg font-semibold">{t}</h3>
-              <p className="mt-2 text-sm text-secondary-fg">{d}</p>
+            { t: "AI Momentum Oracle", d: "Scored every 6h on real social signals — verified, signed, on-chain." },
+            { t: "Quadratic Curve", d: "Price = K × supply. Fair, predictable, no surprises." },
+            { t: "Prediction Markets", d: "Stake YES/NO on creator challenges. Winners split the pot." },
+            { t: "Live Badge NFTs", d: "Bronze → Graduate. Auto-mints, auto-updates as score moves." },
+          ].map(({ t, d }, i) => (
+            <div key={t} className="group relative overflow-hidden rounded-2xl glass p-6 transition-all hover:border-primary/30">
+              <div className="font-mono-num text-xs text-primary">0{i + 1}</div>
+              <h3 className="mt-3 font-display text-2xl">{t}</h3>
+              <p className="mt-2 font-sans text-sm text-secondary-fg">{d}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Top movers */}
-      <section className="container pb-24">
+      <section className="container pb-20">
         <div className="flex items-end justify-between">
           <div>
-            <span className="label-eyebrow text-brand-green">Top momentum</span>
-            <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight">Highest-scoring creators right now</h2>
+            <span className="label-eyebrow">Top momentum</span>
+            <h2 className="mt-2 font-display text-4xl">
+              Highest-scoring creators <span className="font-serif-it text-primary">right now</span>
+            </h2>
           </div>
-          <Button asChild variant="outline" className="border-white/10 bg-elevated hover:bg-hover">
-            <Link to="/leaderboard">All creators <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
+          <Button asChild variant="outline" className="border-white/10 bg-elevated hover:bg-hover rounded-full">
+            <Link to="/leaderboard">All creators <ArrowUpRight className="ml-1.5 h-4 w-4" /></Link>
           </Button>
         </div>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -115,17 +205,20 @@ export default function Landing() {
 
       {/* CTA */}
       <section className="container pb-24">
-        <div className="overflow-hidden rounded-2xl border border-brand-purple/30 bg-gradient-brand-soft p-10 text-center shadow-glow">
-          <Sparkles className="mx-auto h-8 w-8 text-brand-purple" />
-          <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight md:text-4xl">
-            Your reputation, traded live.
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 clouds-bg p-12 text-center">
+          <h2 className="font-display text-4xl md:text-6xl">
+            Your reputation, <span className="font-serif-it text-primary">traded live.</span>
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-secondary-fg">
-            Mint your token in 4 steps. Your score, badge, and curve start moving the moment you post.
+          <p className="mx-auto mt-4 max-w-xl font-sans text-secondary-fg">
+            Mint your token in 4 steps. Score, badge and curve start moving the moment you post.
           </p>
-          <Button asChild size="lg" className="mt-6 bg-gradient-brand text-white hover:opacity-90 shadow-glow">
-            <Link to="/create">Launch token <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
-          </Button>
+          <div className="mt-8 flex justify-center">
+            <div className="ring-cta">
+              <Button asChild size="lg" className="btn-cta-green rounded-full px-8 py-6 text-base font-semibold">
+                <Link to="/create">Launch token <ArrowUpRight className="ml-1 h-5 w-5" /></Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -139,11 +232,41 @@ export default function Landing() {
   );
 }
 
+function ChipLink({
+  to, Icon, label, active = false,
+}: { to: string; Icon: typeof Compass; label: string; active?: boolean }) {
+  return (
+    <Link
+      to={to}
+      className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm transition-colors ${
+        active
+          ? "border-primary/50 bg-primary/10 text-foreground"
+          : "border-white/10 bg-elevated/60 text-secondary-fg hover:text-foreground hover:border-white/20"
+      }`}
+    >
+      <Icon className="h-4 w-4" />
+      {label}
+    </Link>
+  );
+}
+
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-surface px-4 py-3">
-      <div className="font-mono-num text-xl font-semibold">{value}</div>
-      <div className="label-eyebrow text-tertiary-fg">{label}</div>
+    <div className="rounded-2xl glass px-5 py-4">
+      <div className="label-eyebrow">{label}</div>
+      <div className="mt-1 font-mono-num text-2xl">{value}</div>
     </div>
+  );
+}
+
+function Sparkline({ up }: { up: boolean }) {
+  const color = up ? "hsl(var(--up))" : "hsl(var(--down))";
+  const path = up
+    ? "M0 18 L8 14 L16 16 L24 10 L32 12 L40 6 L48 8 L56 4"
+    : "M0 4 L8 8 L16 6 L24 12 L32 10 L40 16 L48 14 L56 18";
+  return (
+    <svg width="56" height="22" viewBox="0 0 56 22" fill="none">
+      <path d={path} stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }

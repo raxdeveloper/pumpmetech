@@ -304,3 +304,33 @@ function Sparkline({ up }: { up: boolean }) {
     </svg>
   );
 }
+
+function HeroStat({
+  delay, eyebrow, value, label, progress, pulse = false,
+}: {
+  delay: string;
+  eyebrow: string;
+  value: string;
+  label: string;
+  progress: number;
+  pulse?: boolean;
+}) {
+  return (
+    <div className={`group relative overflow-hidden rounded-2xl glass p-4 text-left animate-hero-rise ${delay} transition-all hover:border-primary/30`}>
+      <div className="flex items-center justify-between">
+        <span className="label-eyebrow">{eyebrow}</span>
+        <span className={`h-1.5 w-1.5 rounded-full bg-primary ${pulse ? "animate-pulse-dot" : "opacity-60"}`} />
+      </div>
+      <div className={`mt-2 font-bitcount text-3xl ${pulse ? "animate-stat-tick" : "text-foreground"}`}>
+        {value}
+      </div>
+      <div className="mt-1 font-sans text-xs text-secondary-fg">{label}</div>
+      <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/[0.06]">
+        <div
+          className="h-full bg-gradient-brand animate-bar-fill"
+          style={{ width: `${Math.round(progress * 100)}%` }}
+        />
+      </div>
+    </div>
+  );
+}

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useWallet, shortAddress } from "@/lib/wallet";
 import { toast } from "sonner";
+import logo from "@/assets/pumpme-logo.png";
 
 const links = [
   { to: "/", label: "Home" },
@@ -37,24 +38,21 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-background/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-background/70 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <div className="h-7 w-7 rounded-md bg-gradient-brand shadow-glow" />
-          <span className="font-display text-lg font-semibold tracking-tight">
-            pumpme<span className="text-brand-purple">.</span>tech
-          </span>
+          <img src={logo} alt="pumpme.tech" className="h-8 w-auto brightness-0 invert" />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden md:flex items-center gap-1 rounded-full border border-white/[0.08] bg-elevated/60 p-1 backdrop-blur">
           {links.map((l) => (
             <NavLink
               key={l.to}
               to={l.to}
               className={({ isActive }) =>
-                `rounded-md px-3 py-2 text-sm transition-colors ${
+                `rounded-full px-4 py-1.5 text-sm transition-colors ${
                   isActive || (l.to !== "/" && loc.pathname.startsWith(l.to))
-                    ? "text-foreground bg-elevated"
+                    ? "bg-white/10 text-foreground"
                     : "text-secondary-fg hover:text-foreground"
                 }`
               }
@@ -65,7 +63,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex border-white/10 bg-elevated hover:bg-hover">
+          <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex text-secondary-fg hover:text-foreground hover:bg-elevated">
             <Link to="/create">Launch token</Link>
           </Button>
           {publicKey ? (
@@ -99,10 +97,10 @@ export function Navbar() {
               size="sm"
               onClick={handleConnect}
               disabled={connecting}
-              className="bg-gradient-brand text-white hover:opacity-90 shadow-glow"
+              className="btn-cta-green rounded-full px-4"
             >
               <Wallet className="mr-2 h-4 w-4" />
-              {connecting ? "Connecting…" : "Connect"}
+              {connecting ? "Connecting…" : "Sign Up"}
             </Button>
           )}
         </div>

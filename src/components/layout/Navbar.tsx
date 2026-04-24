@@ -31,13 +31,13 @@ export function Navbar() {
 
   return (
     <header className="absolute top-0 left-0 right-0 z-40">
-      <div className="container flex h-20 items-center justify-between">
+      <div className="container flex h-24 md:h-28 items-center justify-between">
         {/* Logo — large & visible */}
         <Link to="/" className="flex items-center">
           <img
             src={logo}
             alt="pumpme.tech"
-            className="h-12 md:h-14 w-auto brightness-0 invert drop-shadow-[0_2px_8px_rgba(20,241,149,0.25)]"
+            className="h-16 md:h-20 lg:h-24 w-auto brightness-0 invert drop-shadow-[0_2px_12px_rgba(20,241,149,0.35)]"
           />
         </Link>
 

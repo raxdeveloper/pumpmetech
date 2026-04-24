@@ -1,5 +1,5 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { Wallet, LogOut, Copy, Check } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Wallet, LogOut, Copy, Check, Twitter } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,15 +10,7 @@ import { useWallet, shortAddress } from "@/lib/wallet";
 import { toast } from "sonner";
 import logo from "@/assets/pumpme-logo.png";
 
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/leaderboard", label: "Leaderboard" },
-  { to: "/challenges", label: "Challenges" },
-  { to: "/portfolio", label: "Portfolio" },
-];
-
 export function Navbar() {
-  const loc = useLocation();
   const { publicKey, connect, disconnect, connecting, balanceSOL, hasPhantom } = useWallet();
   const [copied, setCopied] = useState(false);
 
@@ -38,39 +30,34 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-background/70 backdrop-blur-xl">
-      <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="pumpme.tech" className="h-8 w-auto brightness-0 invert" />
+    <header className="absolute top-0 left-0 right-0 z-40">
+      <div className="container flex h-20 items-center justify-between">
+        {/* Logo — large & visible */}
+        <Link to="/" className="flex items-center">
+          <img
+            src={logo}
+            alt="pumpme.tech"
+            className="h-12 md:h-14 w-auto brightness-0 invert drop-shadow-[0_2px_8px_rgba(20,241,149,0.25)]"
+          />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1 rounded-full border border-white/[0.08] bg-elevated/60 p-1 backdrop-blur">
-          {links.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              className={({ isActive }) =>
-                `rounded-full px-4 py-1.5 text-sm transition-colors ${
-                  isActive || (l.to !== "/" && loc.pathname.startsWith(l.to))
-                    ? "bg-white/10 text-foreground"
-                    : "text-secondary-fg hover:text-foreground"
-                }`
-              }
-            >
-              {l.label}
-            </NavLink>
-          ))}
-        </nav>
-
+        {/* Right cluster — X link + Sign Up, like creator.fun */}
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex text-secondary-fg hover:text-foreground hover:bg-elevated">
-            <Link to="/create">Launch token</Link>
-          </Button>
+          <a
+            href="https://x.com/pumpmetech"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-2 rounded-md border border-white/10 bg-background/40 px-4 py-2 text-sm text-secondary-fg backdrop-blur transition-colors hover:text-foreground hover:border-white/20"
+          >
+            <Twitter className="h-4 w-4" />
+            @pumpmetech
+          </a>
+
           {publicKey ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button size="sm" variant="outline" className="border-brand-purple/40 bg-elevated hover:bg-hover">
-                  <span className="mr-2 h-1.5 w-1.5 rounded-full bg-brand-green" />
+                <Button size="sm" variant="outline" className="rounded-md border-white/10 bg-background/40 backdrop-blur hover:bg-hover">
+                  <span className="mr-2 h-1.5 w-1.5 rounded-full bg-primary animate-pulse-dot" />
                   <span className="font-mono-num">{shortAddress(publicKey)}</span>
                 </Button>
               </DropdownMenuTrigger>
@@ -84,7 +71,7 @@ export function Navbar() {
                 </div>
                 <DropdownMenuSeparator className="bg-white/10" />
                 <DropdownMenuItem onClick={handleCopy} className="cursor-pointer">
-                  {copied ? <Check className="mr-2 h-4 w-4 text-brand-green" /> : <Copy className="mr-2 h-4 w-4" />}
+                  {copied ? <Check className="mr-2 h-4 w-4 text-primary" /> : <Copy className="mr-2 h-4 w-4" />}
                   {copied ? "Copied" : "Copy address"}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={disconnect} className="cursor-pointer text-down">
@@ -97,7 +84,8 @@ export function Navbar() {
               size="sm"
               onClick={handleConnect}
               disabled={connecting}
-              className="btn-cta-green rounded-full px-4"
+              variant="outline"
+              className="rounded-md border-white/15 bg-background/40 px-5 py-2 text-sm font-medium backdrop-blur hover:bg-elevated hover:border-white/30"
             >
               <Wallet className="mr-2 h-4 w-4" />
               {connecting ? "Connecting…" : "Sign Up"}

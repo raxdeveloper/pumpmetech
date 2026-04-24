@@ -147,22 +147,6 @@
     transform: translateY(-1px);
     box-shadow: 0 0 0 1px hsl(154 88% 51% / 0.7), 0 12px 36px hsl(154 88% 51% / 0.5);
   }
-  .ring-cta {
-    position: relative;
-  }
-  .ring-cta::before {
-    content: "";
-    position: absolute;
-    inset: -6px;
-    border-radius: 9999px;
-    border: 1px solid hsl(154 88% 51% / 0.35);
-    animation: ring-pulse 2.4s ease-out infinite;
-    pointer-events: none;
-  }
-  @keyframes ring-pulse {
-    0% { transform: scale(0.96); opacity: 0.9; }
-    100% { transform: scale(1.18); opacity: 0; }
-  }
   .clouds-bg {
     background:
       radial-gradient(ellipse 50% 35% at 20% 80%, hsl(28 50% 35% / 0.45) 0%, transparent 60%),
@@ -170,17 +154,48 @@
       radial-gradient(ellipse 70% 50% at 50% 100%, hsl(220 40% 8%) 0%, transparent 70%),
       var(--gradient-sky);
   }
-  @keyframes cloud-drift {
-    0% { transform: translateX(0) translateY(0); }
-    50% { transform: translateX(-30px) translateY(-8px); }
-    100% { transform: translateX(0) translateY(0); }
+  /* Slow horizontal cloud drift — creator.fun style: 60s+ ease-in-out */
+  @keyframes cloud-drift-1 {
+    0% { transform: translate3d(-4%, 0, 0) scale(1.05); }
+    50% { transform: translate3d(4%, -1%, 0) scale(1.08); }
+    100% { transform: translate3d(-4%, 0, 0) scale(1.05); }
   }
-  .animate-cloud { animation: cloud-drift 18s ease-in-out infinite; }
-  @keyframes float-slow {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+  @keyframes cloud-drift-2 {
+    0% { transform: translate3d(3%, 1%, 0) scale(1.1); }
+    50% { transform: translate3d(-3%, -1%, 0) scale(1.05); }
+    100% { transform: translate3d(3%, 1%, 0) scale(1.1); }
   }
-  .animate-float { animation: float-slow 6s ease-in-out infinite; }
+  .animate-cloud-1 { animation: cloud-drift-1 64s cubic-bezier(0.45, 0, 0.55, 1) infinite; will-change: transform; }
+  .animate-cloud-2 { animation: cloud-drift-2 80s cubic-bezier(0.45, 0, 0.55, 1) infinite; will-change: transform; }
+
+  /* Subtle floating UI — creator.fun dashboard preview */
+  @keyframes float-ui {
+    0%, 100% { transform: translateY(0) rotateX(0deg); }
+    50% { transform: translateY(-10px) rotateX(0.4deg); }
+  }
+  .animate-float { animation: float-ui 7s cubic-bezier(0.37, 0, 0.63, 1) infinite; will-change: transform; }
+
+  /* Glowing CTA ring — concentric expanding rings */
+  @keyframes ring-pulse-1 {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    100% { transform: scale(1.35); opacity: 0; }
+  }
+  @keyframes ring-pulse-2 {
+    0% { transform: scale(0.95); opacity: 0.5; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+  .ring-cta { position: relative; }
+  .ring-cta::before, .ring-cta::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    border: 1px solid hsl(154 88% 51% / 0.5);
+    pointer-events: none;
+  }
+  .ring-cta::before { animation: ring-pulse-1 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+  .ring-cta::after  { animation: ring-pulse-2 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite 0.9s; }
+
   @keyframes ticker {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
@@ -191,4 +206,16 @@
     50% { box-shadow: 0 0 0 6px hsl(154 88% 51% / 0); }
   }
   .animate-pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
+
+  /* Hero entrance: fade + rise, staggered via delay utilities */
+  @keyframes hero-rise {
+    0% { opacity: 0; transform: translateY(18px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .animate-hero-rise { animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-500 { animation-delay: 0.5s; }
 }

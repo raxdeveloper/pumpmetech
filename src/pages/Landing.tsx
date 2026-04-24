@@ -19,14 +19,21 @@ export default function Landing() {
       <Navbar />
 
       {/* Hero — cinematic sky */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden pt-20">
         <div className="absolute inset-0 -z-10 clouds-bg" />
-        <div className="absolute inset-0 -z-10 opacity-40 animate-cloud"
-             style={{ background: "radial-gradient(ellipse 60% 40% at 30% 70%, hsl(28 50% 40% / 0.35), transparent 70%)" }} />
+        {/* Two layered cloud drifts for parallax depth */}
+        <div
+          className="absolute inset-0 -z-10 opacity-50 animate-cloud-1"
+          style={{ background: "radial-gradient(ellipse 55% 35% at 25% 75%, hsl(28 50% 40% / 0.45), transparent 70%)" }}
+        />
+        <div
+          className="absolute inset-0 -z-10 opacity-40 animate-cloud-2"
+          style={{ background: "radial-gradient(ellipse 50% 30% at 75% 70%, hsl(28 45% 35% / 0.4), transparent 70%)" }}
+        />
 
-        <div className="container relative pt-16 pb-10 md:pt-24">
+        <div className="container relative pt-12 pb-10 md:pt-20">
           {/* Powered by Solana pill */}
-          <div className="flex justify-center">
+          <div className="flex justify-center animate-hero-rise">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-background/40 px-4 py-1.5 text-xs backdrop-blur">
               <span className="h-2 w-2 rounded-full bg-primary animate-pulse-dot" />
               <span className="text-secondary-fg">Powered by</span>
@@ -36,7 +43,7 @@ export default function Landing() {
 
           {/* Headline */}
           <div className="mx-auto mt-8 max-w-4xl text-center">
-            <h1 className="font-display text-5xl leading-[1.05] md:text-7xl lg:text-[88px]">
+            <h1 className="font-display text-5xl leading-[1.05] md:text-7xl lg:text-[88px] animate-hero-rise delay-100">
               Create, Trade & Earn
               <br />
               <span className="relative inline-block">
@@ -45,14 +52,14 @@ export default function Landing() {
               </span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-xl font-sans text-base text-secondary-fg md:text-lg">
+            <p className="mx-auto mt-6 max-w-xl font-sans text-base text-secondary-fg md:text-lg animate-hero-rise delay-200">
               An AI-scored reputation economy where every creator token, trade
               and prediction fuels one Solana-native network powered by{" "}
               <span className="font-semibold text-foreground">($PUMP)</span>.
             </p>
 
             {/* CTA */}
-            <div className="mt-10 flex flex-col items-center gap-3">
+            <div className="mt-10 flex flex-col items-center gap-3 animate-hero-rise delay-300">
               <div className="ring-cta">
                 <Button asChild size="lg" className="btn-cta-green rounded-full px-8 py-6 text-base font-semibold">
                   <Link to="/create">
@@ -68,7 +75,7 @@ export default function Landing() {
             </div>
 
             {/* Quick nav chips */}
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-2 animate-hero-rise delay-400">
               <ChipLink to="/leaderboard" Icon={Compass} label="Discover" active />
               <ChipLink to="/leaderboard" Icon={TrendingUp} label="Trade" />
               <ChipLink to="/create" Icon={Rocket} label="Create" />
@@ -77,18 +84,18 @@ export default function Landing() {
             </div>
           </div>
 
-          {/* Floating dashboard preview */}
-          <div className="relative mx-auto mt-16 max-w-6xl">
+          {/* Floating dashboard preview — minimal, no AI avatars */}
+          <div className="relative mx-auto mt-16 max-w-6xl animate-hero-rise delay-500">
             <div className="rounded-3xl border border-white/10 bg-elevated/80 p-3 shadow-card backdrop-blur-xl animate-float">
               <div className="rounded-2xl bg-background/80 p-4">
                 <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                  <div className="flex items-center gap-3">
-                    <div className="h-6 w-6 rounded-md bg-primary/90" />
-                    <span className="font-sans text-sm font-medium">pumpme<span className="text-primary">.</span>tech</span>
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-primary" />
+                    <span className="font-sans text-sm font-medium tracking-tight">pumpme<span className="text-primary">.</span>tech</span>
                   </div>
-                  <div className="hidden sm:flex items-center gap-2">
-                    <div className="rounded-full bg-elevated px-3 py-1 text-xs text-secondary-fg">$ {formatSOL(totalVolume, 0)} SOL</div>
-                    <div className="rounded-full btn-cta-green px-3 py-1 text-xs">+ Create</div>
+                  <div className="hidden sm:flex items-center gap-2 font-mono-num text-xs text-secondary-fg">
+                    <span>{formatSOL(totalVolume, 0)} SOL · 24h</span>
+                    <span className="rounded-md border border-white/10 px-2 py-1">+ Create</span>
                   </div>
                 </div>
 
@@ -96,21 +103,22 @@ export default function Landing() {
                   {top.slice(0, 4).map((c) => {
                     const up = c.priceChange24h >= 0;
                     return (
-                      <div key={c.handle} className="rounded-xl border border-white/[0.06] bg-surface/80 p-3">
+                      <div key={c.handle} className="rounded-xl border border-white/[0.06] bg-surface/80 p-3 transition-colors hover:border-white/20">
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <div className="h-6 w-6 rounded-full" style={{ background: c.avatarColor }} />
-                            <span className="text-sm font-medium">{c.displayName.split(" ")[0]}</span>
-                            <span className="text-xs text-secondary-fg">{`{${c.tokenSymbol}}`}</span>
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md border border-white/10 bg-background text-[10px] font-medium text-foreground/80">
+                              {c.tokenSymbol.slice(0, 2)}
+                            </span>
+                            <span className="font-mono-num text-xs truncate">${c.tokenSymbol}</span>
                           </div>
-                          <span className="text-[10px] text-secondary-fg">{c.holderCount.toLocaleString()} holders</span>
+                          <span className="font-mono-num text-[10px] text-tertiary-fg">{c.holderCount.toLocaleString()}</span>
                         </div>
                         <div className="mt-3 flex items-end justify-between">
                           <div>
-                            <div className="label-eyebrow text-[9px]">Market cap</div>
-                            <div className="font-mono-num text-sm">{formatSOL(c.marketCapSOL, 1)} SOL</div>
+                            <div className="label-eyebrow text-[9px]">Mkt cap</div>
+                            <div className="font-mono-num text-sm">{formatSOL(c.marketCapSOL, 1)}</div>
                             <div className={`font-mono-num text-xs ${up ? "text-up" : "text-down"}`}>
-                              {up ? "↗ +" : "↘ "}{c.priceChange24h.toFixed(2)}%
+                              {up ? "+" : ""}{c.priceChange24h.toFixed(2)}%
                             </div>
                           </div>
                           <Sparkline up={up} />

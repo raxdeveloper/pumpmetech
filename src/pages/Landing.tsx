@@ -43,7 +43,7 @@ export default function Landing() {
 
           {/* Headline */}
           <div className="mx-auto mt-8 max-w-4xl text-center">
-            <h1 className="font-display text-5xl leading-[1.05] md:text-7xl lg:text-[88px] animate-hero-rise delay-100">
+            <h1 className="font-bitcount text-5xl leading-[1.05] md:text-7xl lg:text-[88px] animate-hero-rise delay-100">
               The only social token platform
               <br />
               <span className="relative inline-block">
@@ -58,8 +58,34 @@ export default function Landing() {
               challenges via on-chain prediction markets.
             </p>
 
+            {/* Hero subgrid — animated key stats */}
+            <div className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
+              <HeroStat
+                delay="delay-300"
+                eyebrow="AI Oracle"
+                value="6h"
+                label="score refresh cadence"
+                progress={0.66}
+              />
+              <HeroStat
+                delay="delay-400"
+                eyebrow="Bonding Curve"
+                value="LIVE"
+                label="quadratic · on-chain"
+                progress={1}
+                pulse
+              />
+              <HeroStat
+                delay="delay-500"
+                eyebrow="Prediction Markets"
+                value="YES/NO"
+                label="stake on challenges"
+                progress={0.45}
+              />
+            </div>
+
             {/* CTA */}
-            <div className="mt-10 flex flex-col items-center gap-3 animate-hero-rise delay-300">
+            <div className="mt-10 flex flex-col items-center gap-3 animate-hero-rise delay-500">
               <div className="ring-cta">
                 <Button asChild size="lg" className="btn-cta-green rounded-full px-8 py-6 text-base font-semibold">
                   <Link to="/create">
@@ -75,7 +101,7 @@ export default function Landing() {
             </div>
 
             {/* Quick nav chips */}
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-2 animate-hero-rise delay-400">
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-2 animate-hero-rise delay-600">
               <ChipLink to="/leaderboard" Icon={Compass} label="Discover" active />
               <ChipLink to="/leaderboard" Icon={TrendingUp} label="Trade" />
               <ChipLink to="/create" Icon={Rocket} label="Create" />
@@ -276,5 +302,35 @@ function Sparkline({ up }: { up: boolean }) {
     <svg width="56" height="22" viewBox="0 0 56 22" fill="none">
       <path d={path} stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  );
+}
+
+function HeroStat({
+  delay, eyebrow, value, label, progress, pulse = false,
+}: {
+  delay: string;
+  eyebrow: string;
+  value: string;
+  label: string;
+  progress: number;
+  pulse?: boolean;
+}) {
+  return (
+    <div className={`group relative overflow-hidden rounded-2xl glass p-4 text-left animate-hero-rise ${delay} transition-all hover:border-primary/30`}>
+      <div className="flex items-center justify-between">
+        <span className="label-eyebrow">{eyebrow}</span>
+        <span className={`h-1.5 w-1.5 rounded-full bg-primary ${pulse ? "animate-pulse-dot" : "opacity-60"}`} />
+      </div>
+      <div className={`mt-2 font-bitcount text-3xl ${pulse ? "animate-stat-tick" : "text-foreground"}`}>
+        {value}
+      </div>
+      <div className="mt-1 font-sans text-xs text-secondary-fg">{label}</div>
+      <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/[0.06]">
+        <div
+          className="h-full bg-gradient-brand animate-bar-fill"
+          style={{ width: `${Math.round(progress * 100)}%` }}
+        />
+      </div>
+    </div>
   );
 }

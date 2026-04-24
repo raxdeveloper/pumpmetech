@@ -94,6 +94,7 @@
   .font-serif-it { font-family: 'Instrument Serif', serif; font-style: italic; }
   .font-sans { font-family: 'Inter', sans-serif; }
   .font-mono-num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; font-weight: 500; }
+  .font-bitcount { font-family: 'Bitcount Prop Single', 'JetBrains Mono', monospace; letter-spacing: 0.02em; }
   .tabular { font-variant-numeric: tabular-nums; }
   .label-eyebrow {
     font-family: 'Inter', sans-serif;
@@ -218,4 +219,37 @@
   .delay-300 { animation-delay: 0.3s; }
   .delay-400 { animation-delay: 0.4s; }
   .delay-500 { animation-delay: 0.5s; }
+  .delay-600 { animation-delay: 0.6s; }
+  .delay-700 { animation-delay: 0.7s; }
+
+  /* Right-side controls slide in from right */
+  @keyframes slide-in-right {
+    0% { opacity: 0; transform: translateX(16px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+  .animate-slide-in-right { animation: slide-in-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+  /* Hover glow for nav controls */
+  .nav-glow {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+  }
+  .nav-glow:hover {
+    box-shadow: 0 0 0 1px hsl(154 88% 51% / 0.35), 0 8px 28px hsl(154 88% 51% / 0.18);
+    border-color: hsl(154 88% 51% / 0.45);
+  }
+
+  /* Stat pulse: subtle highlight that ticks like a live counter */
+  @keyframes stat-tick {
+    0%, 100% { color: hsl(0 0% 100%); text-shadow: none; }
+    50% { color: hsl(154 88% 65%); text-shadow: 0 0 18px hsl(154 88% 51% / 0.55); }
+  }
+  .animate-stat-tick { animation: stat-tick 3.6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+
+  /* Live progress bar shimmer */
+  @keyframes bar-fill {
+    0% { transform: scaleX(0.2); }
+    50% { transform: scaleX(1); }
+    100% { transform: scaleX(0.2); }
+  }
+  .animate-bar-fill { transform-origin: left center; animation: bar-fill 6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
 }

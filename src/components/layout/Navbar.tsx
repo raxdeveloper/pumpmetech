@@ -33,7 +33,7 @@ export function Navbar() {
     <header className="absolute top-0 left-0 right-0 z-40">
       <div className="container flex h-24 md:h-28 items-center justify-between">
         {/* Logo — large & visible */}
-        <Link to="/" className="flex items-center">
+        <Link to="/" className="flex items-center animate-hero-rise">
           <img
             src={logo}
             alt="pumpme.tech"
@@ -41,13 +41,13 @@ export function Navbar() {
           />
         </Link>
 
-        {/* Right cluster — X link + Sign Up, like creator.fun */}
-        <div className="flex items-center gap-2">
+        {/* Right cluster — slide in, glass backdrop, hover glow */}
+        <div className="flex items-center gap-2 animate-slide-in-right delay-200">
           <a
             href="https://x.com/pumpmetech"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-2 rounded-md border border-white/10 bg-background/40 px-4 py-2 text-sm text-secondary-fg backdrop-blur transition-colors hover:text-foreground hover:border-white/20"
+            className="nav-glow hidden sm:inline-flex items-center gap-2 rounded-full border border-white/10 bg-background/30 px-4 py-2 text-sm text-secondary-fg backdrop-blur-xl hover:text-foreground"
           >
             <Twitter className="h-4 w-4" />
             @pumpmetech
@@ -56,7 +56,7 @@ export function Navbar() {
           {publicKey ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button size="sm" variant="outline" className="rounded-md border-white/10 bg-background/40 backdrop-blur hover:bg-hover">
+                <Button size="sm" variant="outline" className="nav-glow rounded-full border-white/10 bg-background/30 backdrop-blur-xl hover:bg-hover">
                   <span className="mr-2 h-1.5 w-1.5 rounded-full bg-primary animate-pulse-dot" />
                   <span className="font-mono-num">{shortAddress(publicKey)}</span>
                 </Button>
@@ -85,7 +85,7 @@ export function Navbar() {
               onClick={handleConnect}
               disabled={connecting}
               variant="outline"
-              className="rounded-md border-white/15 bg-background/40 px-5 py-2 text-sm font-medium backdrop-blur hover:bg-elevated hover:border-white/30"
+              className="nav-glow rounded-full border-white/15 bg-background/30 px-5 py-2 text-sm font-medium backdrop-blur-xl hover:bg-elevated"
             >
               <Wallet className="mr-2 h-4 w-4" />
               {connecting ? "Connecting…" : "Sign Up"}
